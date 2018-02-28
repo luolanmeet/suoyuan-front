@@ -1,16 +1,24 @@
 <template>
   <div class="hello">
-      <router-link to="/hw">link</router-link>
+      <noLoginNav></noLoginNav>
+      <router-link class="btn btn btn-danger" to="/hw">link</router-link>
   </div>
 </template>
 
+
 <script>
+
+const noLoginNav = () => import('@/components/nav/NoLoginNav')
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  components: {
+    noLoginNav
   }
 }
 </script>

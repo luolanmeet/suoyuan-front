@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <NoLoginIndex/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+// import HelloWorld from './components/HelloWorld'
+import NoLoginIndex from './pages/NoLoginIndex'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    NoLoginIndex
   }
 }
 </script>
@@ -23,6 +24,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
 }
 </style>
