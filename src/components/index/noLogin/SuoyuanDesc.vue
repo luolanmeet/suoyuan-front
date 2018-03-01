@@ -1,7 +1,7 @@
 <template>
 <div class="row">
   <div class="col-md-7">
-    <div id = "leftDiv" class="jumbotron">
+    <div id="leftDiv" class="jumbotron">
       <h2>所愿</h2>
       <br/>如果那些埋伏在字句间而又呼之欲出的意象是一首诗的生命，
       <br/> 那么，在我们真正的生命里，
@@ -14,10 +14,9 @@
     <div class="jumbotron">
       <br/><br/>
       <button class="btn btn-primary">登录</button>
-      <button class="btn btn-primary">注册</button>
+      <router-link class="btn btn-primary" to="/register">注册</router-link>
     </div>
   </div>
-</div>
 </div>
 </template>
 
@@ -25,20 +24,19 @@
 export default {
   name: 'suoyuanDesc',
   data() {
-    return {
-    }
+    return {}
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .row {
   width: 100%;
 }
 
-.col-md-7, .col-md-5 {
+.col-md-7,
+.col-md-5 {
   padding: 0px;
 }
 
@@ -59,5 +57,4 @@ export default {
 #leftDiv {
   border-right-style: outset;
 }
-
 </style>

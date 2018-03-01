@@ -19,7 +19,7 @@
 
             <ul id = "rightUL" class="nav navbar-nav navbar-right">
               <li><router-link to="/add">登陆</router-link></li>
-              <li><router-link to="/add">注册</router-link></li>
+              <li><router-link to="/register">注册</router-link></li>
             </ul>
           </div>
         </div>

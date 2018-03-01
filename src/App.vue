@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <NoLoginIndex/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld'
+
+import Vue from 'vue'
+import Router from 'vue-router'
+Vue.use(Router)
+
 import NoLoginIndex from './pages/NoLoginIndex'
 
 export default {

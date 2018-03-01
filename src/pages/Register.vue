@@ -1,28 +1,25 @@
 <template>
-  <div class="noLoginIndex">
+  <div class="register">
       <noLoginNav></noLoginNav>
-      <SuoyuanDesc></SuoyuanDesc>
-      <ShowPic></ShowPic>
+      <Register></Register>
       <Footer></Footer>
   </div>
 </template>
 
 <script>
 import NoLoginNav from '@/components/nav/NoLoginNav'
-import SuoyuanDesc from '@/components/index/noLogin/SuoyuanDesc'
-import ShowPic from '@/components/index/noLogin/ShowPic'
+import Register from '@/components/Register'
 import Footer from '@/components/Footer'
 
 export default {
-  name: 'noLoginIndex',
+  name: 'register',
   data () {
     return {
     }
   },
   components: {
     NoLoginNav,
-    SuoyuanDesc,
-    ShowPic,
+    Register,
     Footer
   }
 }

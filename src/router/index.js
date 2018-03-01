@@ -5,6 +5,8 @@ Vue.use(Router)
 
 // 页面
 const testRouter = () => import('@/components/TestRouter')
+const noLoginIndex = () => import('@/pages/NoLoginIndex')
+const register = () => import('@/pages/Register')
 
 // 设置路由
 export default new Router({
@@ -12,8 +14,12 @@ export default new Router({
     base: __dirname,
     routes: [
       {
-        path: "/hw",
-        component: testRouter
+        path: "/",
+        component: noLoginIndex
+      },
+      {
+        path: "/register",
+        component: register
       }
     ]
 })
