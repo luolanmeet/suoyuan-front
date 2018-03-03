@@ -6,6 +6,7 @@ Vue.use(Router)
 // 页面
 const testRouter = () => import('@/components/TestRouter')
 const noLoginIndex = () => import('@/pages/NoLoginIndex')
+const index = () => import('@/pages/Index')
 const register = () => import('@/pages/Register')
 const login = () => import('@/pages/login')
 
@@ -17,6 +18,10 @@ export default new Router({
       {
         path: "/",
         component: noLoginIndex
+      },
+      {
+        path: "/1",
+        component: index
       },
       {
         path: "/register",
