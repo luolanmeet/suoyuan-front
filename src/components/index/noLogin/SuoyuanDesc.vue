@@ -13,7 +13,7 @@
   <div class="col-md-5">
     <div class="jumbotron">
       <br/><br/>
-      <button class="btn btn-primary">登录</button>
+      <router-link class="btn btn-primary" to="/login">登录</router-link>
       <router-link class="btn btn-primary" to="/register">注册</router-link>
     </div>
   </div>

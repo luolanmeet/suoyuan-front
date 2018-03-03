@@ -7,6 +7,7 @@ Vue.use(Router)
 const testRouter = () => import('@/components/TestRouter')
 const noLoginIndex = () => import('@/pages/NoLoginIndex')
 const register = () => import('@/pages/Register')
+const login = () => import('@/pages/login')
 
 // 设置路由
 export default new Router({
@@ -20,6 +21,10 @@ export default new Router({
       {
         path: "/register",
         component: register
+      },
+      {
+        path: "/login",
+        component: login
       }
     ]
 })

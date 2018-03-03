@@ -4,7 +4,7 @@
     <div id="leftDiv" class="jumbotron">
       <form v-on:submit="addCustomer">
         <div class="well">
-          <h4>注册信息</h4>
+          <h4>登录信息</h4>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">邮箱</span>
             <input type="text" class="form-control" placeholder="email" aria-describedby="basic-addon1">
@@ -14,14 +14,10 @@
             <input type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
           </div>
           <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">确认密码</span>
-            <input type="password" class="form-control" placeholder="password again" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">验证码</span>
             <input type="text" class="form-control" placeholder="check code" aria-describedby="basic-addon1">
           </div>
-          <button type="submit" class="btn btn-primary">注册</button>
+          <button type="submit" class="btn btn-primary">登录</button>
         </div>
       </form>
     </div>
@@ -30,7 +26,7 @@
   <div class="col-md-5">
     <div class="jumbotron">
       <br/><br/>
-      <router-link class="btn btn-primary" to="/login">登录</router-link>
+      <router-link class="btn btn-primary" to="/register">注册</router-link>
     </div>
   </div>
 </div>
