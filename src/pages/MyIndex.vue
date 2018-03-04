@@ -1,14 +1,14 @@
 <template>
   <div class="index">
       <HasloginNav></HasloginNav>
-      <DiaryList></DiaryList>
+      <MyIndex></MyIndex>
       <Footer></Footer>
   </div>
 </template>
 
 <script>
 import HasloginNav from '@/components/nav/HasLoginNav'
-import DiaryList from '@/components/index/hasLogin/index/DiaryList'
+import MyIndex from '@/components/index/hasLogin/myIndex/MyIndex'
 import Footer from '@/components/Footer'
 
 export default {
@@ -19,7 +19,7 @@ export default {
   },
   components: {
     HasloginNav,
-    DiaryList,
+    MyIndex,
     Footer
   }
 }

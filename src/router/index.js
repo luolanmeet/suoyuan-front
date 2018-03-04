@@ -7,6 +7,7 @@ Vue.use(Router)
 const testRouter = () => import('@/components/TestRouter')
 const noLoginIndex = () => import('@/pages/NoLoginIndex')
 const index = () => import('@/pages/Index')
+const myIndex = () => import('@/pages/MyIndex')
 const register = () => import('@/pages/Register')
 const login = () => import('@/pages/login')
 
@@ -20,8 +21,12 @@ export default new Router({
         component: noLoginIndex
       },
       {
-        path: "/1",
+        path: "/index",
         component: index
+      },
+      {
+        path: "/myindex",
+        component: myIndex
       },
       {
         path: "/register",

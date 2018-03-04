@@ -13,9 +13,9 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-              <li><router-link to="/">首页</router-link></li>
-              <li><router-link to="/">我的首页</router-link></li>
-              <li><router-link to="/about">此刻</router-link></li>
+              <li><router-link to="/index">首页</router-link></li>
+              <li><router-link to="/myindex">我的首页</router-link></li>
+              <li><router-link to="/now">此刻</router-link></li>
             </ul>
 
             <ul id = "rightUL" class="nav navbar-nav navbar-right">
