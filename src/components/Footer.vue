@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="footer">
     <hr/>
     <div class="row">
         <div class="col-md-8"></div>
@@ -13,7 +13,6 @@ export default {
   name: 'suoyuanFooter',
   data() {
     return {
-
     }
   }
 }
@@ -21,6 +20,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+#footer {
+  margin-bottom: 10px;
+}
 
 hr {
   width: 64%;

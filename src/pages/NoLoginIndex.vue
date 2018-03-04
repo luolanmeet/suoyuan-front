@@ -1,6 +1,6 @@
 <template>
   <div class="noLoginIndex">
-      <noLoginNav></noLoginNav>
+      <NoLoginNav></NoLoginNav>
       <SuoyuanDesc></SuoyuanDesc>
       <ShowPic></ShowPic>
       <Footer></Footer>

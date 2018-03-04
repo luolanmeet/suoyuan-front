@@ -10,6 +10,7 @@ const index = () => import('@/pages/Index')
 const myIndex = () => import('@/pages/MyIndex')
 const register = () => import('@/pages/Register')
 const login = () => import('@/pages/login')
+const now = () => import('@/pages/Now')
 
 // 设置路由
 export default new Router({
@@ -35,6 +36,10 @@ export default new Router({
       {
         path: "/login",
         component: login
+      },
+      {
+        path: "/now",
+        component: now
       }
     ]
 })
