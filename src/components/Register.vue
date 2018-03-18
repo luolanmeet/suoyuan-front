@@ -1,5 +1,6 @@
 <template>
 <div class="row">
+  <Alert v-if="alert" v-bind:message = "alert"></Alert>
   <div class="col-md-7">
     <div id="leftDiv" class="jumbotron">
       <form v-on:submit="userRegister">
@@ -25,6 +26,7 @@
             <input type="password" class="form-control" placeholder="password again"
               aria-describedby="basic-addon1" v-model="registerMsg.passwordAgain">
           </div>
+
           <button type="submit" class="btn btn-primary">注册</button>
         </div>
       </form>
@@ -41,29 +43,47 @@
 </template>
 
 <script>
+import Alert from './Alert'
+
 export default {
   name: 'register',
   data() {
     return {
-      registerMsg: {}
+      registerMsg: {},
+      alert:""
     }
+  },
+  components: {
+    Alert
   },
   methods: {
     userRegister(e) {
-      alert("aaa");
-      var email = this.registerMsg.email.trim();
-      var nickname = this.registerMsg.nickname.trim();
-      var pwd =  this.registerMsg.password.trim();
-      var pwdAgain =  this.registerMsg.passwordAgain.trim();
 
-      if (email == "" || pwd == "" || pwdAgain == "" || nickname == "") {
-        alert("字段不能为空");
+      var email = this.registerMsg.email;
+      var nickname = this.registerMsg.nickname;
+      var pwd =  this.registerMsg.password;
+      var pwdAgain =  this.registerMsg.passwordAgain;
+
+      if (email == null || pwd == null
+            || pwdAgain == null || nickname == null) {
+        this.alert = "字段不能为空";
         e.preventDefault();
         return;
+      } else {
+        email = email.trim();
+        pwd = pwd.trim();
+        pwdAgain = pwdAgain.trim();
+        nickname = nickname.trim();
+        if (email == "" || pwd == ""
+            || pwdAgain == "" || nickname == "") {
+          this.alert = "字段不能为空";
+          e.preventDefault();
+          return;
+        }
       }
 
       if (pwd != pwdAgain) {
-        alert("密码必须一致");
+        this.alert = "密码必须一致";
         e.preventDefault();
         return;
       }
@@ -73,11 +93,16 @@ export default {
         pwd : pwd,
         nickname : nickname
       }
-      console.log(msg);
+
       // 发送注册请求
       this.$http.post("http://localhost:8080/register", msg, {emulateJSON:true})
                 .then(function(response){
                   console.log(response);
+                  if (response.body.code != '0') {
+                    this.alert = response.body.cause;
+                  } else {
+                    this.$router.push({path:"/login", query: {alert: "注册成功,欢迎来到所愿!"}});
+                  }
                 })
 
       e.preventDefault();

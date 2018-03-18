@@ -1,5 +1,6 @@
 <template>
 <div class="row">
+  <Alert v-if="alert" v-bind:message = "alert"></Alert>
   <div class="col-md-7">
     <div id="leftDiv" class="jumbotron">
       <form v-on:submit="addCustomer">
@@ -33,10 +34,23 @@
 </template>
 
 <script>
+
+import Alert from './Alert'
+
 export default {
   name: 'register',
   data() {
-    return {}
+    return {
+      alert:""
+    }
+  },
+  components: {
+    Alert
+  },
+  created() {
+    if(this.$route.query.alert) {
+      this.alert = this.$route.query.alert;
+    }
   }
 }
 </script>
