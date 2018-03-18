@@ -1,20 +1,8 @@
 <template>
 <div class="row">
   <div class="col-md-5">
-    <img  class="thumbnail" src="http://imgsrc.baidu.com/forum/w%3D580/sign=cbf1608fca177f3e1034fc0540cf3bb9/d3d6b013b07eca807f01cbde922397dda04483ce.jpg">
-    <p class="navbar-text">"
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      圣人之道，吾性自足
-      "</p>
+    <img  class="thumbnail" v-bind:src="user.avator">
+    <p class="navbar-text">{{ user.signature }}</p>
   </div>
 
   <div class="col-md-7">
@@ -33,14 +21,6 @@
       </div>
 
       <div>
-        <p class="time">06:30</p>
-        <pre class="context">圣人之道，吾性自足圣人之道，吾性自足圣人之道，吾性自足
-        圣人之道，吾性自足
-        圣人之道，吾性自足
-        圣人之道，吾性自足</pre>
-      </div>
-
-      <div>
         <p class="time">05:30</p>
         <pre class="context">圣人之道，吾性自足圣人之道，吾性自足圣人之道，吾性自足
         圣人之道，吾性自足
@@ -48,37 +28,31 @@
         圣人之道，吾性自足</pre>
       </div>
 
-      <div>
-        <p class="time">04:30</p>
-        <pre class="context">圣人之道，吾性自足圣人之道，吾性自足圣人之道，吾性自足
-        圣人之道，吾性自足
-        圣人之道，吾性自足
-        圣人之道，吾性自足</pre>
-      </div>
-
-      <div>
-        <p class="time">03:30</p>
-        <pre class="context">圣人之道，吾性自足圣人之道，吾性自足圣人之道，吾性自足
-        圣人之道，吾性自足
-        圣人之道，吾性自足
-        圣人之道，吾性自足</pre>
-      </div>
     </div>
   </div>
 </div>
 </template>
-
 
 <script>
 export default {
 
   name: 'diaryList',
   data() {
-    return {}
+    return {
+      user: {}
+    }
   },
   methods: {
   },
   mounted() {
+  },
+  created() {
+    const token = window.localStorage.getItem('token');
+    const id = window.localStorage.getItem('id');
+
+    // 获取用户信息以及用户最后的日志信息
+    this.user.avator = "http://imgsrc.baidu.com/forum/w%3D580/sign=cbf1608fca177f3e1034fc0540cf3bb9/d3d6b013b07eca807f01cbde922397dda04483ce.jpg";
+    this.user.signature = "圣人之道，吾性自足";
   }
 }
 

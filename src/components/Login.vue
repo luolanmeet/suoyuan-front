@@ -3,21 +3,19 @@
   <Alert v-if="alert" v-bind:message = "alert"></Alert>
   <div class="col-md-7">
     <div id="leftDiv" class="jumbotron">
-      <form v-on:submit="addCustomer">
+      <form v-on:submit="userLogin">
         <div class="well">
           <h4>登录信息</h4>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">邮箱</span>
-            <input type="text" class="form-control" placeholder="email" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="email"
+              aria-describedby="basic-addon1" v-model="loginMsg.email">
           </div>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">密码</span>
-            <input type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
+            <input type="password" class="form-control" placeholder="password"
+              aria-describedby="basic-addon1" v-model="loginMsg.pwd">
           </div>
-          <!-- <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">验证码</span>
-            <input type="text" class="form-control" placeholder="check code" aria-describedby="basic-addon1">
-          </div> -->
           <button type="submit" class="btn btn-primary">登录</button>
         </div>
       </form>
@@ -41,11 +39,56 @@ export default {
   name: 'register',
   data() {
     return {
+      loginMsg : {},
       alert:""
     }
   },
   components: {
     Alert
+  },
+  methods: {
+    userLogin(e) {
+      var email = this.loginMsg.email;
+      var pwd =  this.loginMsg.pwd;
+      if (email == null || pwd == null) {
+        this.alert = "错误的登录信息";
+        e.preventDefault();
+        return;
+      } else {
+        email = email.trim();
+        pwd = pwd.trim();
+        if (email == "" || pwd == "" ) {
+          this.alert = "错误的登录信息";
+          e.preventDefault();
+          return;
+        }
+      }
+      alert("sss");
+
+      let msg = {
+        email : email,
+        pwd : pwd
+      }
+
+      // 发送登录请求
+      this.$http.post("http://localhost:8080/login", msg, {emulateJSON:true})
+                .then(function(response){
+                  console.log(response);
+                  if (response.body.code != '0') {
+                    this.alert = response.body.cause;
+                  } else {
+                    console.log(response);
+                    const token = response.body.data.token;
+                    const id = response.body.data.user.id;
+                    window.localStorage.setItem('token', token);
+                    window.localStorage.setItem('id', id);
+                    alert(window.localStorage.getItem('token'));
+                    alert(window.localStorage.getItem('id'));
+                    this.$router.push({path:"/myIndex", query: {}});
+                  }
+                })
+      e.preventDefault();
+    }
   },
   created() {
     if(this.$route.query.alert) {
