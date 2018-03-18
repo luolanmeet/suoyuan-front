@@ -13,10 +13,10 @@
             <span class="input-group-addon" id="basic-addon1">密码</span>
             <input type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
           </div>
-          <div class="input-group">
+          <!-- <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">验证码</span>
             <input type="text" class="form-control" placeholder="check code" aria-describedby="basic-addon1">
-          </div>
+          </div> -->
           <button type="submit" class="btn btn-primary">登录</button>
         </div>
       </form>

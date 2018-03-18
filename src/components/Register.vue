@@ -2,24 +2,28 @@
 <div class="row">
   <div class="col-md-7">
     <div id="leftDiv" class="jumbotron">
-      <form v-on:submit="addCustomer">
+      <form v-on:submit="userRegister">
         <div class="well">
           <h4>注册信息</h4>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">邮箱</span>
-            <input type="text" class="form-control" placeholder="email" aria-describedby="basic-addon1">
+            <input type="text" class="form-control" placeholder="email"
+              aria-describedby="basic-addon1" v-model="registerMsg.email">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">昵称</span>
+            <input type="text" class="form-control" placeholder="nickname"
+              aria-describedby="basic-addon1" v-model="registerMsg.nickname">
           </div>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">密码</span>
-            <input type="password" class="form-control" placeholder="password" aria-describedby="basic-addon1">
+            <input type="password" class="form-control" placeholder="password"
+              aria-describedby="basic-addon1" v-model="registerMsg.password">
           </div>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">确认密码</span>
-            <input type="password" class="form-control" placeholder="password again" aria-describedby="basic-addon1">
-          </div>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1">验证码</span>
-            <input type="text" class="form-control" placeholder="check code" aria-describedby="basic-addon1">
+            <input type="password" class="form-control" placeholder="password again"
+              aria-describedby="basic-addon1" v-model="registerMsg.passwordAgain">
           </div>
           <button type="submit" class="btn btn-primary">注册</button>
         </div>
@@ -40,7 +44,44 @@
 export default {
   name: 'register',
   data() {
-    return {}
+    return {
+      registerMsg: {}
+    }
+  },
+  methods: {
+    userRegister(e) {
+      alert("aaa");
+      var email = this.registerMsg.email.trim();
+      var nickname = this.registerMsg.nickname.trim();
+      var pwd =  this.registerMsg.password.trim();
+      var pwdAgain =  this.registerMsg.passwordAgain.trim();
+
+      if (email == "" || pwd == "" || pwdAgain == "" || nickname == "") {
+        alert("字段不能为空");
+        e.preventDefault();
+        return;
+      }
+
+      if (pwd != pwdAgain) {
+        alert("密码必须一致");
+        e.preventDefault();
+        return;
+      }
+      e.preventDefault();
+      let msg = {
+        email : email,
+        pwd : pwd,
+        nickname : nickname
+      }
+      console.log(msg);
+      // 发送注册请求
+      this.$http.post("http://localhost:8080/register", msg, {emulateJSON:true})
+                .then(function(response){
+                  console.log(response);
+                })
+
+      e.preventDefault();
+    }
   }
 }
 </script>
