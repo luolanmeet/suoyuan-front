@@ -63,13 +63,11 @@ export default {
           return;
         }
       }
-      alert("sss");
 
       let msg = {
         email : email,
         pwd : pwd
       }
-
       // 发送登录请求
       this.$http.post("http://localhost:8080/login", msg, {emulateJSON:true})
                 .then(function(response){
@@ -78,12 +76,8 @@ export default {
                     this.alert = response.body.cause;
                   } else {
                     console.log(response);
-                    const token = response.body.data.token;
-                    const id = response.body.data.user.id;
-                    window.localStorage.setItem('token', token);
-                    window.localStorage.setItem('id', id);
-                    alert(window.localStorage.getItem('token'));
-                    alert(window.localStorage.getItem('id'));
+                    window.localStorage.setItem('token', response.body.data.token);
+                    window.localStorage.setItem('userId', response.body.data.userId);
                     this.$router.push({path:"/myIndex", query: {}});
                   }
                 })
