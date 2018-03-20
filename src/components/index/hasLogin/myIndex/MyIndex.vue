@@ -57,6 +57,7 @@ export default {
                   this.dirays = response.body.data.dirays;
                 }
               })
+
   }
 }
 

@@ -2,45 +2,17 @@
 <div class="row">
   <div class="col-md-7">
 
-    <div class="row">
-      <div class="col-md-4">
-        <div class="thumbnail">12月</div>
-        <div class="thumbnail">23</div>
-      </div>
-      <div class="col-md-8 well well-sm">
-        <div>09:23</div>
-        <p class="navbar-text">
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-          Signed in as Mark Otto Signed in as Mark Otto
-        </p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="thumbnail">12月</div>
-        <div class="thumbnail">23</div>
-      </div>
-      <div class="col-md-8 well well-sm">
-        <div>09:23</div>
-        <p class="navbar-text">Signed in as Mark Otto</p>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4">
-        <div class="thumbnail">12月</div>
-        <div class="thumbnail">23</div>
-      </div>
-      <div class="col-md-8 well well-sm">
-        <div>09:23</div>
-        <p class="navbar-text">Signed in as Mark Otto</p>
+    <div v-for="dirayOfYear in allDirays">
+      <h4><span class="label label-success">{{ dirayOfYear.year }}</span></h4>
+      <div v-for="userdiray in dirayOfYear.userDirays" class="row">
+        <div class="col-md-4">
+          <div class="thumbnail">{{ userdiray.month }}</div>
+          <div class="thumbnail">{{ userdiray.day }}</div>
+        </div>
+        <div class="col-md-8 well well-sm">
+          <div>{{ userdiray.time }}</div>
+          <p class="navbar-text">{{ userdiray.content }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -48,9 +20,9 @@
   <div class="col-md-5">
     <Calendar></Calendar>
   </div>
+
 </div>
 </template>
-
 
 <script>
 import Calendar from '@/components/index/hasLogin/index/Calendar'
@@ -58,11 +30,27 @@ export default {
 
   name: 'diaryList',
   data() {
-    return {}
+    return {
+      allDirays: ""
+    }
   },
   methods: {
   },
-  mounted() {
+  created() {
+    const token = window.localStorage.getItem('token');
+    const userId = window.localStorage.getItem('userId');
+
+    let msg = {
+      userId : userId,
+      token : token
+    }
+    this.$http.post("http://localhost:8080/myDirays", msg, {emulateJSON:true})
+              .then(function(response){
+                console.log(response);
+                if (response.body.code == '0') {
+                  this.allDirays = response.body.data;
+                }
+              })
   },
   components: {
     Calendar
@@ -89,7 +77,7 @@ export default {
 }
 
 .col-md-5 {
-  padding-top: 30px;
+  padding-top: 42px;
   padding-right: 300px;
   /* background-color: #AAAAAA; */
 }
@@ -128,6 +116,11 @@ export default {
   text-align: left;
   padding-left: 15px;
   /* background-color: #555555; */
+}
+
+h4 {
+  margin-left: -340px;
+  margin-bottom: 20px;
 }
 
 </style>
