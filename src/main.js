@@ -16,9 +16,9 @@ new Vue({
   template: '<App/>'
 })
 
-Vue.http.interceptors.push(function(request) {
-
-  const token = window.localStorage.getItem('token');
-  alert(token);
-  request.headers.set('token', token);
-});
+// Vue.http.interceptors.push(function(request) {
+//
+//   const token = window.localStorage.getItem('token');
+//   request.headers.set('token', token);
+//   alert("拦截器" + token);
+// });
