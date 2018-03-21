@@ -20,5 +20,4 @@ new Vue({
 //
 //   const token = window.localStorage.getItem('token');
 //   request.headers.set('token', token);
-//   alert("拦截器" + token);
 // });
