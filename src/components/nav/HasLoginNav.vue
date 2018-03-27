@@ -20,7 +20,7 @@
 
             <ul id = "rightUL" class="nav navbar-nav navbar-right">
               <li><router-link to="/write">写日记</router-link></li>
-              <li><router-link to="/register">设置</router-link></li>
+              <li><router-link to="/settings">设置</router-link></li>
               <li><router-link to="/register">退出</router-link></li>
             </ul>
           </div>
