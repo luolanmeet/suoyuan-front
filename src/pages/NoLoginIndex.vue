@@ -24,6 +24,14 @@ export default {
     SuoyuanDesc,
     ShowPic,
     Footer
+  },
+  created() {
+
+    const token = window.localStorage.getItem('token');
+    const userId = window.localStorage.getItem('userId');
+      if (token != null && userId != null) {
+      this.$router.push({path:"/myIndex", query: {}});
+    }
   }
 }
 </script>

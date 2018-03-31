@@ -21,7 +21,8 @@
             <ul id = "rightUL" class="nav navbar-nav navbar-right">
               <li><router-link to="/write">写日记</router-link></li>
               <li><router-link to="/settings">设置</router-link></li>
-              <li><router-link to="/register">退出</router-link></li>
+              <!-- <li><router-link to="/">退出</router-link></li> -->
+              <li><a href="" v-on:click = "exit">退出</a></li>
             </ul>
           </div>
         </div>
@@ -34,6 +35,14 @@ export default {
   name: 'noLoginNav',
   data () {
     return {
+    }
+  },
+  methods: {
+    exit(e) {
+      alert(e);
+      window.localStorage.clear();
+      this.$router.push({path:"/", query: {}});
+      e.preventDefault();
     }
   }
 }

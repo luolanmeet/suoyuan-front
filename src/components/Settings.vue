@@ -12,6 +12,11 @@
             aria-describedby="basic-addon1" v-model="userMsg.nickname">
         </div>
         <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">个人签名</span>
+          <input type="text" class="form-control" placeholder="signature"
+            aria-describedby="basic-addon1" v-model="userMsg.signature">
+        </div>
+        <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">密码</span>
           <input type="password" class="form-control" placeholder="password"
             aria-describedby="basic-addon1" v-model="userMsg.password">
@@ -21,9 +26,15 @@
           <input type="password" class="form-control" placeholder="password again"
             aria-describedby="basic-addon1" v-model="userMsg.passwordAgain">
         </div>
+        <div class="input-group">
+          <span class="" id="basic-addon1">
+            是否公开日记  &nbsp;
+            <input type="checkbox" v-model="userMsg.isOpen">
+          </span>
+        </div>
       </div>
       <div class="col-md-1">
-        <div id="avatorFrom" action="">
+        <div class="thumbnail" id="avatorFrom" action="">
           <div v-bind:style="{backgroundImage: 'url(' + pic + ')'}">
             <a href="javascript:" class="wrapper">
               <input type="file" v-on:change="picChange($event)" />
@@ -50,9 +61,11 @@ export default {
   data() {
     return {
       userMsg: {},
-      alert:"",
-      pic: "http://localhost:8080/pic/cat.jpg",
-      file: ""
+      pic: "",
+      avator:"",
+      file: "",
+      token:"",
+      userId:""
     }
   },
   components: {
@@ -61,20 +74,26 @@ export default {
   methods: {
     settings(e) {
 
-      alert(this.file);
-
-      const token = window.localStorage.getItem('token');
-      const userId = window.localStorage.getItem('userId');
       var nickname = this.userMsg.nickname;
+      var signature = this.userMsg.signature;
       var pwd =  this.userMsg.password;
-      // var pwdAgain =  this.userMsg.passwordAgain;
+      var pwdAgain =  this.userMsg.passwordAgain;
+      var isOpen =  this.userMsg.isOpen;
+
+      if (isOpen) {
+        isOpen = 1;
+      } else {
+        isOpen = 0;
+      }
 
       let formData = new FormData();
       formData.append('nickname', nickname);
-      formData.append('userId', userId);
+      formData.append('signature', signature);
       formData.append('pwd', pwd);
-      formData.append('token', token);
-      formData.append('file', this.file);
+      formData.append('isOpen', isOpen);
+      formData.append('token', this.token);
+      formData.append('userId', this.userId);
+      formData.append('avator', this.avator);
 
       let config = {
             headers: {
@@ -85,7 +104,9 @@ export default {
       // 发送修改请求
       this.$http.post("http://localhost:8080/update", formData, config)
                 .then(function(response){
-                    alert("success");
+                    if (response.body.code == '0') {
+                      this.$router.push({path:"/myIndex", query: {}});
+                    }
                 })
 
       e.preventDefault();
@@ -106,7 +127,44 @@ export default {
         } else {
             alert('文件格式只支持：jpg、jpeg 和 png');
         }
+
+        let formData = new FormData();
+        formData.append('file', this.file);
+        formData.append('token', this.token);
+        formData.append('userId', this.userId);
+
+        let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+        }
+        // 发送修改请求
+        this.$http.post("http://localhost:8080/uploadPic", formData, config)
+                  .then(function(response){
+                      if (response.body.code == '0') {
+                        this.avator = response.body.data;
+                      }
+                  })
     }
+  },
+  created() {
+
+    this.token = window.localStorage.getItem('token');
+    this.userId = window.localStorage.getItem('userId');
+
+    let msg = {
+      userId : this.userId,
+      token : this.token
+    }
+    this.$http.post("http://localhost:8080/userMsg", msg, {emulateJSON:true})
+              .then(function(response){
+                if (response.body.code == '0') {
+                  this.userMsg.nickname = response.body.data.nickname;
+                  this.userMsg.signature = response.body.data.signature;
+                  this.userMsg.isOpen = response.body.data.isOpen;
+                  this.pic = response.body.data.avator;
+                }
+              })
   }
 }
 </script>
@@ -128,21 +186,21 @@ span {
   width: 330px;
 }
 
-#input-group{
-
-}
-
 #avator {
   width: 180px;
   height: 180px;
   border: 5px;
 }
 
+#avatorFrom {
+  width: 190px;
+  height: 190px;
+}
+
 #avatorFrom > div {
   width: 180px;
   height: 180px;
   background-size:cover;
-  /* background-image: url(http://localhost:8080/pic/cat.jpg); */
 }
 
 .wrapper input{
