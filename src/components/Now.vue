@@ -1,71 +1,47 @@
 <template>
 <div id="now">
-  <div class="row">
+
+  <div class="row" v-for="openDirayUsers in openDirayUserss">
     <div class="col-md-1"></div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
+
+    <div v-for="openDirayUser in openDirayUsers" class="col-md-2">
+      <a href="#" class="thumbnail"
+         v-bind:style="{backgroundImage: 'url(' + openDirayUser.avator + ')'}"></a>
     </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
+
     <div class="col-md-1"></div>
   </div>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-2">
-      <a href="#" class="thumbnail">
-        <img src="http://localhost:8080/pic/cat.jpg">
-      </a>
-    </div>
-    <div class="col-md-1"></div>
-  </div>
+
 </div>
 </template>
 
 <script>
 export default {
-  name: 'showPic',
+  name: 'now',
   data() {
-    return {}
+    return {
+      openDirayUserss: ""
+    }
+  },
+  created() {
+
+    const token = window.localStorage.getItem('token');
+    const userId = window.localStorage.getItem('userId');
+
+    let msg = {
+      userId : userId,
+      token : token
+    }
+
+    // 请求图片
+    this.$http.post("http://localhost:8080/getOpenDirayUser", msg, {emulateJSON:true})
+              .then(function(response){
+                console.log(response);
+                if (response.body.code == '0') {
+                  this.openDirayUserss = response.body.data;
+                }
+              })
+
   }
 }
 </script>
@@ -84,12 +60,16 @@ export default {
 
 .col-md-1,
 .col-md-2 {
-  padding: 8px;
+  padding: 0px;
   padding-bottom: 0px;
   padding-top: 0px;
 }
 
 .thumbnail {
+  height: 170px;
+  width: 170px;
+  background-size:cover;
+  background-repeat:no-repeat;
   box-shadow: 6px 6px 8px #999999;
 }
 

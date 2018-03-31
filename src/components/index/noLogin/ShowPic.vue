@@ -31,7 +31,6 @@ export default {
     }
   },
   created() {
-    alert("aaab");
     // 请求图片
     this.$http.post("http://localhost:8080/randomPic", {emulateJSON:true})
               .then(function(response){

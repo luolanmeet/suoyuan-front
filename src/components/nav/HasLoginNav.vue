@@ -39,7 +39,6 @@ export default {
   },
   methods: {
     exit(e) {
-      alert(e);
       window.localStorage.clear();
       this.$router.push({path:"/", query: {}});
       e.preventDefault();
