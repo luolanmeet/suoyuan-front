@@ -78,7 +78,8 @@ export default {
                     console.log(response);
                     window.localStorage.setItem('token', response.body.data.token);
                     window.localStorage.setItem('userId', response.body.data.userId);
-                    this.$router.push({path:"/myIndex", query: {}});
+                    // this.$router.push({path:"/myIndex", query: {}});
+                    this.$router.push({path:"/diary", query: {writerId: response.body.data.userId}});
                   }
                 })
       e.preventDefault();

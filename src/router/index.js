@@ -28,7 +28,8 @@ export default new Router({
         component: index
       },
       {
-        path: "/myindex",
+        // 查看别人的日志也是这个组件
+        path: "/diary",
         component: myIndex
       },
       {

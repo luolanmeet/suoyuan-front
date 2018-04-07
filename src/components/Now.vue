@@ -5,7 +5,7 @@
     <div class="col-md-1"></div>
 
     <div v-for="openDirayUser in openDirayUsers" class="col-md-2">
-      <a href="#" class="thumbnail"
+      <a href="" class="thumbnail" v-on:click="diray(openDirayUser.id)"
          v-bind:style="{backgroundImage: 'url(' + openDirayUser.avator + ')'}"></a>
     </div>
 
@@ -21,6 +21,12 @@ export default {
   data() {
     return {
       openDirayUserss: ""
+    }
+  },
+  methods: {
+    diray(writerId) {
+      this.$router.push({path:"/diary", query: {writerId: writerId}});
+      e.preventDefault();
     }
   },
   created() {

@@ -30,7 +30,7 @@ export default {
     const token = window.localStorage.getItem('token');
     const userId = window.localStorage.getItem('userId');
     if (token != null && userId != null) {
-      this.$router.push({path:"/myIndex", query: {}});
+      this.$router.push({path:"/diary", query: {writerId: userId}});
     }
   }
 }

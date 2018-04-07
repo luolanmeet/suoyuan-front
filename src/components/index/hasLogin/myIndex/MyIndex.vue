@@ -1,7 +1,10 @@
 <template>
 <div class="row">
   <div class="col-md-5">
-    <img  class="thumbnail" v-bind:src="user.avator">
+    <img class="thumbnail" v-bind:src="user.avator">
+
+    <!-- <div class="thumbnail" v-bind:style="{backgroundImage: 'url(' + user.avator + ')'}"></div> -->
+
     <p class="navbar-text">{{ user.signature }}</p>
   </div>
 
@@ -15,6 +18,7 @@
         <p class="time">{{ diray.time }}</p>
         <pre class="context">{{ diray.content }}</pre>
       </div>
+      <div class="nickname">-- {{ user.nickname }}</div>
     </div>
   </div>
 </div>
@@ -28,7 +32,8 @@ export default {
     return {
       user: {
         avator: "",
-        signature: ""
+        signature: "",
+        nickname: ""
       },
       lastDirayDate: "",
       dirays: ""
@@ -45,7 +50,8 @@ export default {
     // 获取用户信息以及用户最后的日志信息
     let msg = {
       userId : userId,
-      token : token
+      token : token,
+      writerId : this.$route.query.writerId
     }
     this.$http.post("http://localhost:8080/myIndex", msg, {emulateJSON:true})
               .then(function(response){
@@ -53,6 +59,7 @@ export default {
                 if (response.body.code == '0') {
                   this.user.avator = response.body.data.avator;
                   this.user.signature = response.body.data.signature;
+                  this.user.nickname = response.body.data.nickname;
                   this.lastDirayDate = response.body.data.lastDirayDate;
                   this.dirays = response.body.data.dirays;
                 }
@@ -120,6 +127,16 @@ export default {
     white-space: pre-wrap;
     border: none;
     font-weight:300;
+}
+.nickname {
+  text-align: right;
+}
+
+.thumbnail {
+  width: 100%;
+  background-size:cover;
+  background-repeat:no-repeat;
+  box-shadow: 6px 6px 8px #999999;
 }
 
 </style>
