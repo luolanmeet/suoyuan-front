@@ -47,7 +47,8 @@ export default {
                     this.alert = response.body.cause;
                   } else {
                     console.log(response);
-                    this.$router.push({path:"/myIndex", query: {}});
+                    // this.$router.push({path:"/myIndex", query: {}});
+                    this.$router.push({path:"/diary", query: {writerId: userId}});
                   }
                 })
       e.preventDefault();

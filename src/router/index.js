@@ -12,6 +12,7 @@ const register = () => import('@/pages/Register')
 const login = () => import('@/pages/login')
 const now = () => import('@/pages/Now')
 const wirteDiary = () => import('@/pages/WirteDiary')
+const article = () => import('@/pages/Article')
 const settings = () => import('@/pages/Settings')
 
 // 设置路由
@@ -51,6 +52,10 @@ export default new Router({
       {
         path: "/settings",
         component: settings
+      },
+      {
+        path: "/article",
+        component: article
       }
     ]
 })

@@ -1,6 +1,8 @@
 <template>
 <div id="now">
 
+  <div id="article"><router-link to="/article">每日文章</router-link></div>
+
   <div class="row" v-for="openDirayUsers in openDirayUserss">
     <div class="col-md-1"></div>
 
@@ -56,7 +58,12 @@ export default {
 
 #now {
   /* background-color: #000000; */
-  margin-top: 30px;
+  /* margin-top: 30px; */
+}
+
+#article{
+  margin: 6px;
+  margin-right: -800px;
 }
 
 .row {
@@ -78,5 +85,4 @@ export default {
   background-repeat:no-repeat;
   box-shadow: 6px 6px 8px #999999;
 }
-
 </style>

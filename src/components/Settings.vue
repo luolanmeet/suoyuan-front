@@ -105,7 +105,7 @@ export default {
       this.$http.post("http://localhost:8080/update", formData, config)
                 .then(function(response){
                     if (response.body.code == '0') {
-                      this.$router.push({path:"/myIndex", query: {}});
+                      this.$router.push({path:"/diary", query: {writerId:  this.userId}});
                     }
                 })
 

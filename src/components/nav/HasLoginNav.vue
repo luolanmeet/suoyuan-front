@@ -9,12 +9,12 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="">所愿</a>
+            <a class="navbar-brand">所愿</a>
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
               <li><router-link to="/index">首页</router-link></li>
-              <!-- <li><router-link to="/myindex">我的首页</router-link></li> -->
+              <!-- <li><router-link to="/diray">我的首页</router-link></li> -->
               <li><a href="" v-on:click = "diray">我的首页</a></li>
               <li><router-link to="/now">此刻</router-link></li>
             </ul>
@@ -44,9 +44,9 @@ export default {
       e.preventDefault();
     },
     diray(e) {
-
       const userId = window.localStorage.getItem('userId');
       this.$router.push({path:"/diary", query: {writerId: userId}});
+      window.location.reload();
       e.preventDefault();
     }
   }

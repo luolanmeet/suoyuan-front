@@ -1,10 +1,11 @@
 <template>
 <div class="row">
   <div class="col-md-5">
-    <img class="thumbnail" v-bind:src="user.avator">
 
+    <!-- <img class="thumbnail" v-bind:src="user.avator"> -->
     <!-- <div class="thumbnail" v-bind:style="{backgroundImage: 'url(' + user.avator + ')'}"></div> -->
 
+    <div class="thumbnail"  v-bind:style="{backgroundImage: 'url(' + user.avator + ')'}"></div>
     <p class="navbar-text">{{ user.signature }}</p>
   </div>
 
@@ -41,18 +42,18 @@ export default {
   },
   methods: {
   },
-  mounted() {
+  updated() {
   },
-  created() {
+  mounted() {
     const token = window.localStorage.getItem('token');
     const userId = window.localStorage.getItem('userId');
-
     // 获取用户信息以及用户最后的日志信息
     let msg = {
       userId : userId,
       token : token,
       writerId : this.$route.query.writerId
     }
+
     this.$http.post("http://localhost:8080/myIndex", msg, {emulateJSON:true})
               .then(function(response){
                 console.log(response);
@@ -64,7 +65,8 @@ export default {
                   this.dirays = response.body.data.dirays;
                 }
               })
-
+  },
+  created() {
   }
 }
 
@@ -132,11 +134,20 @@ export default {
   text-align: right;
 }
 
-.thumbnail {
+/* .thumbnail {
   width: 100%;
   background-size:cover;
   background-repeat:no-repeat;
   box-shadow: 6px 6px 8px #999999;
+} */
+
+.thumbnail {
+  height: 300px;
+  width: 300px;
+  margin-left: 180px;
+  background-size:cover;
+  background-repeat:no-repeat;
+  box-shadow: 8px 10px 18px #999999;
 }
 
 </style>
