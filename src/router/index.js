@@ -15,6 +15,7 @@ const wirteDiary = () => import('@/pages/WirteDiary')
 const article = () => import('@/pages/Article')
 const settings = () => import('@/pages/Settings')
 const communityIndex = () => import('@/pages/CommunityIndex')
+const topic = () => import('@/pages/Topic')
 
 // 设置路由
 export default new Router({
@@ -61,6 +62,10 @@ export default new Router({
       {
         path: "/community",
         component: communityIndex
+      },
+      {
+        path: "/topic",
+        component: topic
       }
     ]
 })

@@ -196,7 +196,6 @@ export default {
   padding-top: 10px;
   background-color: #EFEFFF;
   border: 1px solid;
-  /* border-radius:5px; */
 }
 .topic {
   padding-top: 3px;
@@ -216,6 +215,8 @@ export default {
 
 .contentOne, .contentTwo {
   width: 80%;
+  border:0.5px solid;
+  border-radius:5px;
 }
 
 .contentOne {
@@ -225,7 +226,7 @@ export default {
 }
 
 .contentTwo {
-  /* background-color: #EEEEEE; */
+  background-color: #F5F5F5;
   /* border-top-style: inset; */
 }
 
