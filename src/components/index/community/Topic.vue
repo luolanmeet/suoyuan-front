@@ -14,53 +14,62 @@
       <div class="comments">
 
         <dir class="line"></dir>
-        <div class="comment row">
-
+        <div class="comment row" v-on:mouseenter="enter(0)">
           <div class="col-md-1">
             <img class="" src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg">
           </div>
-
           <div class="col-md-9">
             <div class="name">洛兰相遇 </div>
             <div class="content">哈哈 笑死我啦</div>
           </div>
-
           <div class="col-md-2">
-            10天前
+              <p class="time">10天前&nbsp;&nbsp;&nbsp;#1</p>
+              <a v-on:click="call(0)" class="reply" v-show="shows[0]" >回复</a>
           </div>
         </div>
 
         <dir class="line"></dir>
-        <div class="comment row">
-
+        <div class="comment row" v-on:mouseenter="enter(1)">
           <div class="col-md-1">
             <img class="" src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg">
           </div>
-
           <div class="col-md-9">
             <div class="name">洛兰相遇 </div>
             <div class="content">哈哈 笑死我啦</div>
           </div>
-
           <div class="col-md-2">
-            10天前
+            <p class="time">10天前&nbsp;&nbsp;&nbsp;#2</p>
+            <a v-on:click="call(1)" class="reply" v-show="shows[1]" >回复</a>
           </div>
         </div>
 
         <dir class="line"></dir>
-        <div class="comment row">
-
+        <div class="comment row" v-on:mouseenter="enter(2)">
           <div class="col-md-1">
             <img class="" src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg">
           </div>
-
           <div class="col-md-9">
             <div class="name">洛兰相遇 </div>
-            <div class="content">哈哈 笑死我啦</div>
+            <div class="content">哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦哈哈 笑死我啦</div>
           </div>
-
           <div class="col-md-2">
-            10天前
+            <p class="time">121天前&nbsp;&nbsp;&nbsp;#3</p>
+            <a v-on:click="call(2)" class="reply" v-show="shows[2]" >回复</a>
+          </div>
+        </div>
+
+
+        <dir class="line"></dir>
+        <div class="comment row">
+          <div class="col-md-1">
+            <img class="" src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg">
+          </div>
+          <div class="col-md-9">
+            <textarea id="reply" rows="3" cols="20" v-model="replyContent">
+            </textarea>
+          </div>
+          <div class="col-md-2">
+            <input type="button" id="commit" value="回复">
           </div>
         </div>
 
@@ -69,8 +78,6 @@
 
     </div>
   </div>
-
-
 
   <div id="rightDiv" class="col-md-5">
 
@@ -89,7 +96,24 @@
 export default {
   name: 'suoyuanDesc',
   data() {
-    return {}
+    return {
+      index: -1,
+      shows: [],
+      replyContent: ""
+    }
+  },
+  methods: {
+    enter(index) {
+
+      this.shows.splice(index, 1, true);
+      if (index != this.index) {
+        this.shows.splice(this.index, 1, false);
+        this.index = index;
+      }
+    },
+    call(index) {
+      this.replyContent  = this.replyContent + "@" + index;
+    }
   }
 }
 </script>
@@ -139,15 +163,12 @@ export default {
   margin-left: 10px;
   border:0.3px solid;
   border-radius:5px;
-
 }
 
 .comments {
 
   margin-top: 16px;
-
   padding-top: 20px;
-
   background-color: #F5F5F5;
   margin-right: 20px;
   padding-left: 9px;
@@ -173,6 +194,7 @@ export default {
 }
 
 pre {
+  font-size: 17px;
   text-align: left;
   white-space:pre-wrap;
   white-space:-moz-pre-wrap;
@@ -208,6 +230,11 @@ pre {
   /* border-top-style: inset; */
 }
 
+.col-md-2 {
+  margin-left: -25px;
+  text-align: right;
+}
+
 .contentOne > .avator {
   margin-top: -5px;
   height: 140px;
@@ -229,6 +256,27 @@ pre {
   padding-top: 12px;
   padding-left: 12px;
   text-align: left;
+}
+
+.time {
+  font-style: italic;
+  font-size: 12px;
+  color: #AAAAAA;
+}
+
+#reply {
+  width: 100%;
+  height: 130px;
+  resize: none;
+}
+
+#commit {
+  margin-top: 100px;
+}
+
+.reply {
+  font-size: 14px;
+  cursor: pointer;
 }
 
 </style>
