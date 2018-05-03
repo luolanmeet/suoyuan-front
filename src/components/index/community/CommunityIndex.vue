@@ -215,8 +215,9 @@ export default {
 
 .contentOne, .contentTwo {
   width: 80%;
-  border:0.5px solid;
+  /* border:0.5px solid; */
   border-radius:5px;
+  box-shadow: 4px 5px 8px #AAAAAA;
 }
 
 .contentOne {

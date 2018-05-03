@@ -13,12 +13,12 @@
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-              <li><router-link to="/">首页</router-link></li>
-              <li><router-link to="/login">发布话题</router-link></li>
+              <li><router-link to="/community">首页</router-link></li>
+              <li><router-link to="/createTopic">发布话题</router-link></li>
             </ul>
 
             <ul id = "rightUL" class="nav navbar-nav navbar-right">
-              <li><router-link to="/login">日记</router-link></li>
+              <li><router-link to="/">日记</router-link></li>
             </ul>
           </div>
         </div>
