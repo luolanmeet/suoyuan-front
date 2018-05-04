@@ -1,5 +1,5 @@
 <template>
-<div class="row">
+<div class="row" id="topDiv">
   <div class="col-md-7 ">
     <div id="leftDiv">
 
@@ -58,7 +58,6 @@
           </div>
         </div>
 
-
         <dir class="line"></dir>
         <div class="comment row">
           <div class="col-md-1">
@@ -74,7 +73,6 @@
         </div>
 
       </div>
-
 
     </div>
   </div>
@@ -120,6 +118,10 @@ export default {
 
 <style scoped>
 
+#topDiv {
+  width: 100%;
+}
+
 .col-md-7,
 .col-md-5 {
   padding: 0px;
@@ -149,6 +151,7 @@ export default {
   text-align: left;
   border:0.5px solid;
   border-radius:5px;
+  border-color: #AAAAAA;
 }
 
 .topic > h4 {
@@ -175,6 +178,7 @@ export default {
   text-align: left;
   border:0.5px solid;
   border-radius:5px;
+  border-color: #AAAAAA;
 }
 
 .comments > .line {
@@ -182,6 +186,7 @@ export default {
   margin-left: 5px;
   margin-right: 15px;
   margin-bottom: 8px;
+  border-color: #BBBBBB;
 }
 
 .comment {
@@ -269,6 +274,7 @@ pre {
   width: 100%;
   height: 130px;
   resize: none;
+  padding-left: 8px;
 }
 
 #commit {

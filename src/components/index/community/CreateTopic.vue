@@ -1,14 +1,21 @@
 <template>
-<div class="row">
+<div class="row" id="topDiv">
   <div class="col-md-7 ">
     <div id="leftDiv">
 
       <div class="topic">
         <h4>创建话题</h4>
-        <input type="text" id="title"> <p>标题不少于5个字</p>
+        <input type="text" id="title"> <span>标题不少于5个字</span>
 
-        <textarea id="reply" rows="3" cols="20" v-model="content">
+        <textarea id="reply" rows="3" cols="20" v-model="content" placeholder="想说的">
         </textarea>
+
+        <div v-show="!showTag" id="addTag"><a v-on:click="showTagInput">添加标签</a></div>
+
+        <div v-show="showTag">
+          <input type="text" maxlength="2" id="tag"> <span id="tagSpan">标签为两个汉字</span>
+        </div>
+
         <input type="button" id="createBtn" value="创建">
       </div>
 
@@ -33,26 +40,23 @@ export default {
   name: 'suoyuanDesc',
   data() {
     return {
+      showTag: false,
       content: ""
     }
   },
   methods: {
-    enter(index) {
-
-      this.shows.splice(index, 1, true);
-      if (index != this.index) {
-        this.shows.splice(this.index, 1, false);
-        this.index = index;
-      }
-    },
-    call(index) {
-      this.replyContent  = this.replyContent + "@" + index;
+    showTagInput() {
+      this.showTag = true;
     }
   }
 }
 </script>
 
 <style scoped>
+
+#topDiv {
+  width: 100%;
+}
 
 .col-md-7,
 .col-md-5 {
@@ -83,6 +87,7 @@ export default {
   text-align: left;
   border:0.5px solid;
   border-radius:5px;
+  border-color: #AAAAAA;
 }
 
 .topic > h4 {
@@ -90,7 +95,13 @@ export default {
   margin-left: 10px;
 }
 
-.contentOne, .contentTwo {
+.topic > span {
+  margin-left: 5px;
+  color: #777777;
+  font-size: 12px;
+}
+
+.contentOne {
   width: 80%;
 }
 
@@ -126,17 +137,26 @@ export default {
 }
 
 #title {
-  margin-bottom: 10px;
+
+  width: 200px;
+  height: 40px;
+  padding-left: 8px;
+  margin-bottom: 15px;
   border:0.5px solid;
-  border-radius:5px;
+  border-radius:4px;
+  border-color: #AAAAAA;
 }
 
 #reply {
   width: 98%;
-  height: 130px;
+  height: 280px;
+  padding-top: 8px;
+  padding-left: 8px;
   resize: none;
   border:0.5px solid;
-  border-radius:5px;
+  border-radius:4px;
+  border-color: #AAAAAA;
+  font-size: 14px;
 }
 
 #createBtn {
@@ -145,6 +165,26 @@ export default {
   border-radius:2px;
   margin: 20px;
   margin-left: auto;
+}
+
+#addTag, #tag{
+  margin-top: 20px;
+}
+
+#tag {
+  width: 50px;
+  height: 30px;
+  font-size: 14px;
+  padding-left: 10px;
+  border:0.5px solid;
+  border-radius:4px;
+  border-color: #AAAAAA;
+}
+
+#tagSpan {
+  margin-left: 5px;
+  color: #777777;
+  font-size: 12px;
 }
 
 </style>

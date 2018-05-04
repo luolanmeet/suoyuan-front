@@ -63,6 +63,9 @@ export default {
                   this.user.nickname = response.body.data.nickname;
                   this.lastDirayDate = response.body.data.lastDirayDate;
                   this.dirays = response.body.data.dirays;
+
+                  window.localStorage.setItem('avator', response.body.data.avator);
+                  window.localStorage.setItem('nickname', response.body.data.nickname);
                 }
               })
   },

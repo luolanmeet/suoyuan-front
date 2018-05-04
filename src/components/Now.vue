@@ -1,7 +1,10 @@
 <template>
 <div id="now">
 
-  <div id="article"><router-link to="/article">每日文章</router-link></div>
+  <div id="article">
+    <router-link to="/article">每日文章</router-link>
+    <router-link to="/community">社区</router-link>
+  </div>
 
   <div class="row" v-for="openDirayUsers in openDirayUserss">
     <div class="col-md-1"></div>
@@ -59,11 +62,12 @@ export default {
 #now {
   /* background-color: #000000; */
   /* margin-top: 30px; */
+  /* width: 100%; */
 }
 
 #article{
   margin: 6px;
-  margin-right: -800px;
+  padding-left: 800px;
 }
 
 .row {

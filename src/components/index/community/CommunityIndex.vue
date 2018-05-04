@@ -1,5 +1,5 @@
 <template>
-<div class="row">
+<div class="row" id="topDiv">
   <div class="col-md-7">
     <div id="leftDiv">
 
@@ -7,21 +7,12 @@
         <span>话题广场</span>
       </div>
 
-      <div class="topic">
-        <a href=""><img src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg" alt="">
-        hello world</a>
+      <div class="topic" v-for="topic in topics">
+        <a href="">
+          <img v-bind:src="topic.avator"/>
+          {{ topic.title }}
+      </a>
       </div>
-
-      <div class="topic">
-        <a href=""><img src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg" alt="">
-        hello world</a>
-      </div>
-
-      <div class="topic">
-        <a href=""><img src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg" alt="">
-        你做过的最有趣的事情是什么？</a>
-      </div>
-
     </div>
   </div>
 
@@ -29,9 +20,10 @@
 
     <div class="contentOne well">
       <div class="avator">
-        <a><img src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg" alt=""></a>
+        <!-- <a><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525413770572&di=d5a415ecd3a09f378c9cb5daf3d51c05&imgtype=0&src=http%3A%2F%2Fs22.mogucdn.com%2Fp1%2F160308%2F23c5y7_ie3tgn3gg5qwiyzsg4zdambqgayde_700x547.jpg" alt=""></a> -->
+        <a><img v-bind:src="avator"/></a>
       </div>
-      <p>洛兰相遇</p>
+      <p>{{ nickname }}</p>
    </div>
 
    <div class="contentTwo well">
@@ -40,7 +32,6 @@
        <div class="col-md-1">
        </div>
        <div class="col-md-2">
-         <!-- <a class="btn btn-default" href="">目标</a> -->
          <a class="" href="">目标</a>
        </div>
        <div class="col-md-2">
@@ -157,12 +148,48 @@
 export default {
   name: 'suoyuanDesc',
   data() {
-    return {}
+    return {
+      topics: [],
+      nickname: "",
+      avator: ""
+    }
+  },
+  created() {
+
+    const token = window.localStorage.getItem('token');
+    const userId = window.localStorage.getItem('userId');
+
+    let msg = {
+      userId: userId,
+      token: token,
+    }
+
+    if (token != null && userId != null) {
+
+      this.$http.post("http://localhost:8080/topic", msg, {emulateJSON:true})
+                .then(function(response){
+                  console.log(response);
+                  if (response.body.code != '0') {
+                    this.$router.push({path:"/", query: {}});
+                  } else {
+                    console.log(response);
+                    this.topics = response.body.data;
+                    this.avator = window.localStorage.getItem('avator');
+                    this.nickname = window.localStorage.getItem('nickname');
+                  }
+                })
+    } else {
+      this.$router.push({path:"/", query: {}});
+    }
   }
 }
 </script>
 
 <style scoped>
+
+#topDiv {
+  width: 100%;
+}
 
 .col-md-7,
 .col-md-5 {
@@ -196,6 +223,7 @@ export default {
   padding-top: 10px;
   background-color: #EFEFFF;
   border: 1px solid;
+  border-color: #888888;
 }
 .topic {
   padding-top: 3px;
@@ -203,6 +231,7 @@ export default {
   border-top: 0px;
   text-align: left;
   border-radius:2px;
+  border-color: #888888;
 }
 .topic > a {
   text-decoration: none;
@@ -228,7 +257,6 @@ export default {
 
 .contentTwo {
   background-color: #F5F5F5;
-  /* border-top-style: inset; */
 }
 
 .contentOne > .avator {
@@ -249,21 +277,28 @@ export default {
 }
 
 .contentTwo > p {
-  padding-top: 12px;
-  padding-left: 12px;
+  /* padding-top: 10px; */
+  /* padding-left: 12px; */
   text-align: left;
-}
-.contentTwo > .row:first-child {
-  /* padding-top: 6px; */
 }
 
 .contentTwo > .row > .col-md-2 {
-  /* margin-bottom: 6px; */
+  margin-left: -4px;
+  margin-top: 5px;
+  width: 18%;
 }
 
 .contentTwo > .row > .col-md-2 > a {
   /* background-color: #DDDDDD; */
-   text-decoration: none;
+  font-size: 15px;
+  text-decoration: none;
+  /* background-color: #EEEEEE; */
+    border-radius:2px;
+}
+
+.contentTwo > .row > .col-md-2 > a:hover {
+  color: #E0FFFF;
+  background-color: #CDB79E;
 }
 
 </style>
