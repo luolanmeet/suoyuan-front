@@ -20,7 +20,6 @@
 
     <div class="contentOne well">
       <div class="avator">
-        <!-- <a><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525413770572&di=d5a415ecd3a09f378c9cb5daf3d51c05&imgtype=0&src=http%3A%2F%2Fs22.mogucdn.com%2Fp1%2F160308%2F23c5y7_ie3tgn3gg5qwiyzsg4zdambqgayde_700x547.jpg" alt=""></a> -->
         <a><img v-bind:src="avator"/></a>
       </div>
       <p>{{ nickname }}</p>
@@ -273,7 +272,8 @@ export default {
 
 .contentOne > p {
   margin-top: 5px;
-  margin-left: 40px;
+  margin-left: -170px;
+  text-align: center;
 }
 
 .contentTwo > p {
