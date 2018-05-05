@@ -27,116 +27,16 @@
 
    <div class="contentTwo well">
      <p>热门标签：</p>
-     <div class="row">
-       <div class="col-md-1">
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-1">
-       </div>
-     </div>
 
-     <div class="row">
-       <div class="col-md-1">
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-1">
-       </div>
-     </div>
+     <div v-for="(row,i) in listTemp" class="row">
 
-     <div class="row">
-       <div class="col-md-1">
+       <div class="col-md-1"></div>
+       <div v-for="(cell,j) in row" class="col-md-2">
+         <a class="" href="">{{cell}}</a>
        </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-1">
-       </div>
-     </div>
+       <div class="col-md-1"></div>
 
-     <div class="row">
-       <div class="col-md-1">
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-1">
-       </div>
      </div>
-
-     <div class="row">
-       <div class="col-md-1">
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-2">
-         <a class="" href="">目标</a>
-       </div>
-       <div class="col-md-1">
-       </div>
-     </div>
-
    </div>
 
   </div>
@@ -149,8 +49,26 @@ export default {
   data() {
     return {
       topics: [],
+      tags: [],
       nickname: "",
       avator: ""
+    }
+  },
+  computed: {
+    listTemp: function () {
+
+     var tags = this.tags;
+     var arrTemp = [];
+     var index = 0;
+     var sectionCount = 5;
+     for (var i = 0; i < tags.length; i++) {
+           index = parseInt(i / sectionCount);
+           if (arrTemp.length <= index) {
+               arrTemp.push([]);
+           }
+           arrTemp[index].push(tags[i]);
+       }
+      return arrTemp;
     }
   },
   created() {
@@ -172,7 +90,8 @@ export default {
                     this.$router.push({path:"/", query: {}});
                   } else {
                     console.log(response);
-                    this.topics = response.body.data;
+                    this.topics = response.body.data.topics;
+                    this.tags = response.body.data.tags;
                     this.avator = window.localStorage.getItem('avator');
                     this.nickname = window.localStorage.getItem('nickname');
                   }
@@ -272,7 +191,7 @@ export default {
 
 .contentOne > p {
   margin-top: 5px;
-  margin-left: -170px;
+  margin-left: -172px;
   text-align: center;
 }
 

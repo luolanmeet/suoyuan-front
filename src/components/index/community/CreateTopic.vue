@@ -5,7 +5,7 @@
 
       <div class="topic">
         <h4>创建话题</h4>
-        <input type="text" id="title"> <span>标题不少于5个字</span>
+        <input type="text" id="title" v-model="title"> <span>标题不少于5个字</span>
 
         <textarea id="reply" rows="3" cols="20" v-model="content" placeholder="想说的">
         </textarea>
@@ -13,10 +13,10 @@
         <div v-show="!showTag" id="addTag"><a v-on:click="showTagInput">添加标签</a></div>
 
         <div v-show="showTag">
-          <input type="text" maxlength="2" id="tag"> <span id="tagSpan">标签为两个汉字</span>
+          <input type="text" maxlength="2" id="tag" v-model="tag"> <span id="tagSpan">标签为两个汉字</span>
         </div>
 
-        <input type="button" id="createBtn" value="创建">
+        <input type="button" id="createBtn" value="创建" v-on:click="createTopic">
       </div>
 
     </div>
@@ -26,10 +26,12 @@
 
     <div class="contentOne well">
       <div class="avator">
-        <a><img src="http://img5.imgtn.bdimg.com/it/u=2739844137,3941296902&fm=27&gp=0.jpg" alt=""></a>
+        <a><img v-bind:src="avator"/></a>
       </div>
-      <p>洛兰相遇</p>
+      <p>{{ nickname }}</p>
    </div>
+
+   <div id = "error" v-if="error" class="alert alert-danger">{{ error }}</div>
 
   </div>
 </div>
@@ -41,13 +43,71 @@ export default {
   data() {
     return {
       showTag: false,
-      content: ""
+      title: "",
+      content: "",
+      tag:"",
+      avator: "",
+      nickname: "",
+      error:""
     }
   },
   methods: {
     showTagInput() {
       this.showTag = true;
+    },
+    createTopic(e) {
+
+      var content = this.content;
+      var title = this.title;
+      var tag = this.tag;
+
+      if (title.length < 5) {
+        this.error = "标题不少于五个字哦";
+        return ;
+      }
+      if (content.length == 0) {
+        this.error = "内容不能为空哦";
+        return ;
+      }
+
+      if (tag.length != 0) {
+        if (tag.length != 2) {
+          this.error = "标签必须是两个汉字哦";
+          return ;
+        }
+        if(!/^[\u4e00-\u9fa5]+$/gi.test(tag))  {
+          this.error = "标签只能是汉字哦";
+          return ;
+        }
+      }
+
+      const token = window.localStorage.getItem('token');
+      const userId = window.localStorage.getItem('userId');
+
+      let msg = {
+        userId: userId,
+        token: token,
+        title: title,
+        tag: tag,
+        content: content
+      }
+
+      this.$http.post("http://localhost:8080/createTopic", msg, {emulateJSON:true})
+                .then(function(response){
+                  console.log(response);
+                  if (response.body.code != '0') {
+                    this.error = response.body.cause;
+                  } else {
+                    console.log(response);
+                    this.$router.push({path:"/community", query: {}});
+                  }
+                })
+      e.preventDefault();
     }
+  },
+  created() {
+      this.avator = window.localStorage.getItem('avator');
+      this.nickname = window.localStorage.getItem('nickname');
   }
 }
 </script>
@@ -101,7 +161,7 @@ export default {
   font-size: 12px;
 }
 
-.contentOne {
+.contentOne, #error {
   width: 80%;
 }
 
@@ -133,7 +193,8 @@ export default {
 
 .contentOne > p {
   margin-top: 5px;
-  margin-left: 40px;
+  margin-left: -172px;
+  text-align: center;
 }
 
 #title {
@@ -169,6 +230,10 @@ export default {
 
 #addTag, #tag{
   margin-top: 20px;
+}
+
+#addTag > a {
+  cursor: pointer;
 }
 
 #tag {
