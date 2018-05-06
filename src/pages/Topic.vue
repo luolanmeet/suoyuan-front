@@ -8,7 +8,7 @@
 
 <script>
 import CommunityNav from '@/components/nav/CommunityNav'
-import Topic from '@/components/index/community/Topic'
+import Topic from '@/components/Topic'
 import Footer from '@/components/Footer'
 
 export default {

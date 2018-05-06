@@ -8,10 +8,12 @@
       </div>
 
       <div class="topic" v-for="topic in topics">
-        <a href="">
+
+        <a v-on:click="getTopic(topic.topicId)">
           <img v-bind:src="topic.avator"/>
           {{ topic.title }}
-      </a>
+        </a>
+
       </div>
     </div>
   </div>
@@ -69,6 +71,11 @@ export default {
            arrTemp[index].push(tags[i]);
        }
       return arrTemp;
+    }
+  },
+  methods: {
+    getTopic(topicId) {
+      this.$router.push({path:"/topic", query: {topicId: topicId}});
     }
   },
   created() {
@@ -153,6 +160,7 @@ export default {
 }
 .topic > a {
   text-decoration: none;
+  cursor: pointer;  
 }
 .topic > a > img {
   width: 38px;

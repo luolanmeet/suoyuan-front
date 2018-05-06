@@ -14,15 +14,14 @@
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
               <li><router-link to="/index">首页</router-link></li>
-              <!-- <li><router-link to="/diray">我的首页</router-link></li> -->
-              <li><a href="" v-on:click = "diray">我的首页</a></li>
+              <li><a v-on:click = "diray">我的首页</a></li>
               <li><router-link to="/now">此刻</router-link></li>
             </ul>
 
             <ul id = "rightUL" class="nav navbar-nav navbar-right">
               <li><router-link to="/write">写日记</router-link></li>
               <li><router-link to="/settings">设置</router-link></li>
-              <li><a href="" v-on:click = "exit">退出</a></li>
+              <li><a v-on:click = "exit">退出</a></li>
             </ul>
           </div>
         </div>
@@ -71,6 +70,10 @@ export default {
 
 #rightUL {
   margin-right: 13%;
+}
+
+a {
+  cursor: pointer;
 }
 
 </style>

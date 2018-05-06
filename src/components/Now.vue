@@ -10,7 +10,7 @@
     <div class="col-md-1"></div>
 
     <div v-for="openDirayUser in openDirayUsers" class="col-md-2">
-      <a href="" class="thumbnail" v-on:click="diray(openDirayUser.id)"
+      <a class="thumbnail" v-on:click="diray(openDirayUser.id)"
          v-bind:style="{backgroundImage: 'url(' + openDirayUser.avator + ')'}"></a>
     </div>
 
@@ -31,7 +31,6 @@ export default {
   methods: {
     diray(writerId) {
       this.$router.push({path:"/diary", query: {writerId: writerId}});
-      e.preventDefault();
     }
   },
   created() {
@@ -52,7 +51,6 @@ export default {
                   this.openDirayUserss = response.body.data;
                 }
               })
-
   }
 }
 </script>
@@ -89,4 +87,9 @@ export default {
   background-repeat:no-repeat;
   box-shadow: 6px 6px 8px #999999;
 }
+
+a {
+  cursor: pointer;
+}
+
 </style>
