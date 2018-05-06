@@ -45,7 +45,7 @@ export default {
     diray(e) {
       const userId = window.localStorage.getItem('userId');
       this.$router.push({path:"/diary", query: {writerId: userId}});
-      window.location.reload();
+      // window.location.reload();
       e.preventDefault();
     }
   }

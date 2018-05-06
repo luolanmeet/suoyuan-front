@@ -40,36 +40,40 @@ export default {
       dirays: ""
     }
   },
-  methods: {
-  },
-  updated() {
-  },
-  mounted() {
-    const token = window.localStorage.getItem('token');
-    const userId = window.localStorage.getItem('userId');
-    // 获取用户信息以及用户最后的日志信息
-    let msg = {
-      userId : userId,
-      token : token,
-      writerId : this.$route.query.writerId
+  watch: {
+    '$route' (to, from) {
+      this.getDate();
     }
-
-    this.$http.post("http://localhost:8080/myIndex", msg, {emulateJSON:true})
-              .then(function(response){
-                console.log(response);
-                if (response.body.code == '0') {
-                  this.user.avator = response.body.data.avator;
-                  this.user.signature = response.body.data.signature;
-                  this.user.nickname = response.body.data.nickname;
-                  this.lastDirayDate = response.body.data.lastDirayDate;
-                  this.dirays = response.body.data.dirays;
-
-                  window.localStorage.setItem('avator', response.body.data.avator);
-                  window.localStorage.setItem('nickname', response.body.data.nickname);
-                }
-              })
   },
   created() {
+    this.getDate();
+  },
+  methods: {
+    getDate() {
+      const token = window.localStorage.getItem('token');
+      const userId = window.localStorage.getItem('userId');
+      // 获取用户信息以及用户最后的日志信息
+      let msg = {
+        userId : userId,
+        token : token,
+        writerId : this.$route.query.writerId
+      }
+
+      this.$http.post("http://localhost:8080/myIndex", msg, {emulateJSON:true})
+                .then(function(response){
+                  console.log(response);
+                  if (response.body.code == '0') {
+                    this.user.avator = response.body.data.avator;
+                    this.user.signature = response.body.data.signature;
+                    this.user.nickname = response.body.data.nickname;
+                    this.lastDirayDate = response.body.data.lastDirayDate;
+                    this.dirays = response.body.data.dirays;
+
+                    window.localStorage.setItem('avator', response.body.data.avator);
+                    window.localStorage.setItem('nickname', response.body.data.nickname);
+                  }
+                })
+    }
   }
 }
 
