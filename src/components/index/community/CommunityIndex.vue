@@ -4,7 +4,7 @@
     <div id="leftDiv">
 
       <div class="header">
-        <span>话题广场</span>
+        <span>{{ headerTitle }}</span>
       </div>
 
       <div class="topic" v-for="topic in topics">
@@ -34,7 +34,7 @@
 
        <div class="col-md-1"></div>
        <div v-for="(cell,j) in row" class="col-md-2">
-         <a class="" href="">{{cell}}</a>
+         <a class="tag" v-on:click="tagClick(cell.name)" >{{cell.name}}</a>
        </div>
        <div class="col-md-1"></div>
 
@@ -47,13 +47,14 @@
 
 <script>
 export default {
-  name: 'suoyuanDesc',
+  name: 'communityIndex',
   data() {
     return {
       topics: [],
       tags: [],
       nickname: "",
-      avator: ""
+      avator: "",
+      headerTitle: "话题广场"
     }
   },
   computed: {
@@ -76,6 +77,38 @@ export default {
   methods: {
     getTopic(topicId) {
       this.$router.push({path:"/topic", query: {topicId: topicId}});
+    },
+    tagClick(tagName) {
+      console.log(tagName);
+
+      const token = window.localStorage.getItem('token');
+      const userId = window.localStorage.getItem('userId');
+
+      let msg = {
+        userId: userId,
+        token: token,
+        tagName: tagName
+      }
+
+      if (token != null && userId != null) {
+
+        this.$http.post("http://localhost:8080/topicWithTag", msg, {emulateJSON:true})
+                  .then(function(response){
+                    console.log(response);
+                    if (response.body.code != '0') {
+                      this.$router.push({path:"/", query: {}});
+                    } else {
+                      console.log(response);
+                      this.topics = response.body.data.topics;
+                      this.tags = response.body.data.tags;
+                      this.headerTitle = "话题广场 -- " + tagName;
+                    }
+                  })
+      } else {
+        this.$router.push({path:"/", query: {}});
+      }
+
+
     }
   },
   created() {
@@ -160,7 +193,7 @@ export default {
 }
 .topic > a {
   text-decoration: none;
-  cursor: pointer;  
+  cursor: pointer;
 }
 .topic > a > img {
   width: 38px;
@@ -226,6 +259,10 @@ export default {
 .contentTwo > .row > .col-md-2 > a:hover {
   color: #E0FFFF;
   background-color: #CDB79E;
+}
+
+.tag {
+  cursor: pointer;
 }
 
 </style>

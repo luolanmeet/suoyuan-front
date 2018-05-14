@@ -80,6 +80,20 @@ export default {
       var pwdAgain =  this.userMsg.passwordAgain;
       var isOpen =  this.userMsg.isOpen;
 
+      if (pwd == null) {
+        pwd = "";
+      }
+
+      if (pwdAgain == null) {
+        pwdAgain = "";
+      }
+
+      if (pwd != pwdAgain) {
+        alert("两次密码不一致");
+        e.preventDefault();
+        return;
+      }
+
       if (isOpen) {
         isOpen = 1;
       } else {
@@ -94,7 +108,7 @@ export default {
       formData.append('token', this.token);
       formData.append('userId', this.userId);
       formData.append('avator', this.avator);
-
+      console.log(pwd);
       let config = {
             headers: {
               'Content-Type': 'multipart/form-data'
