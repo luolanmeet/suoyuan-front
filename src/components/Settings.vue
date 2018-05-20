@@ -32,6 +32,9 @@
             <input type="checkbox" v-model="userMsg.isOpen">
           </span>
         </div>
+        <div class="input-group">
+          <a v-on:click="getDirayFile">导出日记</a>
+        </div>
       </div>
       <div class="col-md-1">
         <div class="thumbnail" id="avatorFrom" action="">
@@ -102,12 +105,16 @@ export default {
 
       let formData = new FormData();
       formData.append('nickname', nickname);
-      formData.append('signature', signature);
       formData.append('pwd', pwd);
       formData.append('isOpen', isOpen);
       formData.append('token', this.token);
       formData.append('userId', this.userId);
       formData.append('avator', this.avator);
+
+      if (signature != null) {
+        formData.append('signature', signature);
+      }
+
       console.log(pwd);
       let config = {
             headers: {
@@ -159,6 +166,27 @@ export default {
                         this.avator = response.body.data;
                       }
                   })
+    },
+    getDirayFile() {
+
+      let msg = {
+        userId: this.userId,
+        token: this.token,
+      }
+
+      this.$http.post("http://localhost:8080/getDirayFile", msg, {emulateJSON:true,responseType:'arraybuffer'})
+                .then(function(response){
+                    console.log(response);
+
+                    let blob = new Blob([response.data], {type: "application/pdf"});
+                    let url = window.URL.createObjectURL(blob);
+                    let link = document.createElement('a');
+                    link.style.display = 'none';
+                    link.href = url;
+                    link.setAttribute('download', '日记.pdf');
+                    document.body.appendChild(link);
+                    link.click();
+                })
     }
   },
   created() {
@@ -221,6 +249,11 @@ span {
   opacity:0;
   height:180px;
   width:180px;
+  cursor: pointer;
+}
+
+a {
+  cursor: pointer;
 }
 
 </style>
