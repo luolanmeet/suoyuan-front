@@ -29,6 +29,11 @@
             <div class="col-md-2">
               <p class="time">{{ reply.time }}&nbsp;&nbsp;&nbsp;#{{ reply.no }}</p>
               <a v-on:click="call(index)" class="reply" v-show="shows[index]" >回复</a>
+              <br>
+              <a class="toNickname"
+                    v-on:click="lookReply(reply.replyId)"
+                    v-if="reply.toNickname"
+                    v-show="shows[index]" >查看对话</a>
             </div>
           </div>
 
@@ -61,7 +66,7 @@
     </div>
   </div>
 
-  <div id="rightDiv" class="col-md-5">
+  <div id="rightDiv" class="col-md-5" v-show="!showRightDivTopic">
 
     <div class="contentOne well">
       <div class="avator">
@@ -71,6 +76,43 @@
    </div>
 
   </div>
+
+  <div id="rightDivTopic" class="col-md-5" v-show="showRightDivTopic">
+
+    <div class="rightDivTopicContentOne well">
+
+      <button type="button" class="close" v-on:click="closeRightDivTopic" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+      <br>
+
+      <div v-for="(reply, index) in lookReplys">
+
+        <div class="line2"></div>
+
+        <div class="row">
+          <div class="col-md-1">
+            <img class="topicDetailImg" v-bind:src="reply.avator"/>
+          </div>
+          <div class="topicDetailDiv col-md-9">
+            <div class="topicDetailName"> {{ reply.nickname }} </div>
+            <div class="topicDetailContent">
+              <a class="topicDetailToNickname" v-if="reply.toNickname" >@{{ reply.toNickname }}</a>
+              {{ reply.content }}
+            </div>
+          </div>
+          <div class="col-md-2">
+            <p class="time">{{ reply.time }}</p>
+          </div>
+        </div>
+
+      </div>
+   </div>
+
+  </div>
+
+
 </div>
 </template>
 
@@ -79,6 +121,8 @@ export default {
   name: 'topic',
   data() {
     return {
+
+      showRightDivTopic: false,
       a2u : false,
       a2uName: "",
       index: -1,
@@ -93,7 +137,8 @@ export default {
       topicId: "",
       content: "",
       tNickname: "",
-      replys:[]
+      replys: [],
+      lookReplys: []
     }
   },
   methods: {
@@ -120,8 +165,37 @@ export default {
       this.a2u = false
       this.shows.splice(this.index, 1, false);
     },
+    closeRightDivTopic() {
+      this.showRightDivTopic = false;
+    },
     clickTextarea() {
       this.shows.splice(this.index, 1, false);
+    },
+    lookReply(replyId) {
+
+      alert(replyId);
+
+      const token = window.localStorage.getItem('token');
+      const userId = window.localStorage.getItem('userId');
+
+      let msg = {
+        userId: userId,
+        token: token,
+        replyId: replyId
+      }
+
+      this.$http.post("http://localhost:8080/getLookReplys", msg, {emulateJSON:true})
+                .then(function(response){
+                  console.log(response);
+                  if (response.body.code != '0') {
+                    this.$router.push({path:"/", query: {}});
+                  } else {
+                    console.log(response);
+                    this.lookReplys = response.body.data;
+                  }
+                })
+
+      this.showRightDivTopic = true;
     },
     reply() {
 
@@ -334,6 +408,17 @@ pre {
   box-shadow: 4px 5px 8px #AAAAAA;
 }
 
+.rightDivTopicContentOne > button {
+  margin-top: -10px;
+}
+
+.rightDivTopicContentOne {
+  width: 90%;
+  margin-top: -10px;
+  text-align: left;
+  border-radius:5px;
+}
+
 .contentTwo {
   /* background-color: #EEEEEE; */
   /* border-top-style: inset; */
@@ -402,6 +487,15 @@ pre {
 .toNickname {
   cursor: pointer;
   text-decoration:none;
+}
+
+.topicDetailImg {
+  width: 40px;
+  border-radius:3px;
+}
+
+.topicDetailDiv {
+    padding-left: 32px;
 }
 
 </style>

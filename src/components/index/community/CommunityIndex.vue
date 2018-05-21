@@ -108,7 +108,6 @@ export default {
         this.$router.push({path:"/", query: {}});
       }
 
-
     }
   },
   created() {
