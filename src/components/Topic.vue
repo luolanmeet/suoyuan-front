@@ -134,6 +134,7 @@ export default {
 
       title: "",
       tAvator: "",
+      tUserId: 0,
       topicId: "",
       content: "",
       tNickname: "",
@@ -219,6 +220,8 @@ export default {
         userId: userId,
         token: token,
         topicId: this.topicId,
+        title: this.title,
+        topicCreaterId: this.tUserId,
         fromUserId: userId,
         nickname: this.nickname,
         avator: this.avator,
@@ -273,6 +276,7 @@ export default {
                       console.log(response);
                       this.title = response.body.data.title;
                       this.tAvator = response.body.data.avator;
+                      this.tUserId = response.body.data.userId;
                       this.tNickname = response.body.data.nickname;
                       this.content = response.body.data.content;
                       this.replys = response.body.data.replys;
