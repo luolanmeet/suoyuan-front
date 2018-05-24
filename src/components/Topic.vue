@@ -173,8 +173,6 @@ export default {
     },
     lookReply(replyId) {
 
-      alert(replyId);
-
       const token = window.localStorage.getItem('token');
       const userId = window.localStorage.getItem('userId');
 

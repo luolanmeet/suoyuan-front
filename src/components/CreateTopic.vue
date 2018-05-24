@@ -169,14 +169,8 @@ export default {
   margin-top: -10px;
   text-align: left;
   height: 180px;
-  /* border:0.5px solid; */
   border-radius:5px;
   box-shadow: 4px 5px 8px #AAAAAA;
-}
-
-.col-md-2 {
-  margin-left: -25px;
-  text-align: right;
 }
 
 .contentOne > .avator {

@@ -20,11 +20,17 @@
 
   <div id="rightDiv" class="col-md-5">
 
-    <div class="contentOne well">
-      <div class="avator">
+    <div class="contentOne well row">
+      <div class="avator col-md-6">
         <a><img v-bind:src="avator"/></a>
+        <div class = "nickname"><p>{{ nickname }}</p></div>
       </div>
-      <p>{{ nickname }}</p>
+
+      <div class="myMessage col-md-6">
+        <a v-on:click="getNoReadMsg()">
+          <span class="label label-warning">我的消息</span><span class="badge">{{ messageNum }}</span>
+        </a>
+      </div>
    </div>
 
    <div class="contentTwo well">
@@ -46,6 +52,11 @@
 </template>
 
 <script>
+
+$(function () {
+    $('[data-toggle="popover"]').popover();
+})
+
 export default {
   name: 'communityIndex',
   data() {
@@ -54,7 +65,9 @@ export default {
       tags: [],
       nickname: "",
       avator: "",
-      headerTitle: "话题广场"
+      headerTitle: "话题广场",
+      timer: null,
+      messageNum: 0
     }
   },
   computed: {
@@ -74,7 +87,39 @@ export default {
       return arrTemp;
     }
   },
+  beforeDestroy() {
+    if(this.timer) {
+        clearInterval(this.timer);
+    }
+  },
   methods: {
+    getNoReadMsg() {
+
+      if (this.messageNum != 0) {
+        this.$router.push({path:"/notify", query: {}});
+      }
+    },
+    getNoReadNum() {
+      console.log("hh");
+
+      const token = window.localStorage.getItem('token');
+      const userId = window.localStorage.getItem('userId');
+      let msg = {
+        userId: userId,
+        token: token
+      }
+
+      this.$http.post("http://localhost:8080/getNoReadNum", msg, {emulateJSON:true})
+                .then(function(response){
+                  if (response.body.code != '0') {
+                    this.$router.push({path:"/", query: {}});
+                  } else {
+                    console.log(response);
+                    this.messageNum = response.body.data;
+                  }
+                })
+
+    },
     getTopic(topicId) {
       this.$router.push({path:"/topic", query: {topicId: topicId}});
     },
@@ -111,7 +156,6 @@ export default {
     }
   },
   created() {
-
     const token = window.localStorage.getItem('token');
     const userId = window.localStorage.getItem('userId');
 
@@ -135,6 +179,10 @@ export default {
                     this.nickname = window.localStorage.getItem('nickname');
                   }
                 })
+      this.getNoReadNum();
+      this.timer = setInterval(() => {
+                      this.getNoReadNum();
+                   }, 10000);
     } else {
       this.$router.push({path:"/", query: {}});
     }
@@ -211,6 +259,7 @@ export default {
   margin-top: -10px;
   text-align: left;
   height: 180px;
+  margin-left: 0.3px;
 }
 
 .contentTwo {
@@ -218,7 +267,6 @@ export default {
 }
 
 .contentOne > .avator {
-  margin-top: -5px;
   height: 140px;
   width: 140px;
 }
@@ -229,15 +277,19 @@ export default {
   border-radius:8px;
 }
 
-.contentOne > p {
-  margin-top: 5px;
-  margin-left: -172px;
+.nickname {
   text-align: center;
+  padding-left: 24px;
+}
+
+.myMessage {
+  padding-left: 30px;
+  padding-top: 120px;
 }
 
 .contentTwo > p {
-  /* padding-top: 10px; */
-  /* padding-left: 12px; */
+  padding-top: 10px;
+  padding-left: 12px;
   text-align: left;
 }
 
@@ -258,6 +310,11 @@ export default {
 .contentTwo > .row > .col-md-2 > a:hover {
   color: #E0FFFF;
   background-color: #CDB79E;
+}
+
+.myMessage > a {
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .tag {

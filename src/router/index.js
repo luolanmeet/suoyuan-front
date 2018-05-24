@@ -17,6 +17,7 @@ const settings = () => import('@/pages/Settings')
 const communityIndex = () => import('@/pages/CommunityIndex')
 const topic = () => import('@/pages/Topic')
 const createTopic = () => import('@/pages/CreateTopic')
+const notify = () => import('@/pages/Notify')
 
 // 设置路由
 export default new Router({
@@ -71,6 +72,10 @@ export default new Router({
       {
         path: "/createTopic",
         component: createTopic
+      },
+      {
+        path: "/notify",
+        component: notify
       }
     ]
 })
