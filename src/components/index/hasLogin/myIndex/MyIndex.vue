@@ -37,7 +37,8 @@ export default {
         nickname: ""
       },
       lastDirayDate: "",
-      dirays: ""
+      dirays: "",
+      writerId:0
     }
   },
   watch: {
@@ -58,7 +59,7 @@ export default {
         token : token,
         writerId : this.$route.query.writerId
       }
-
+      this.writerId = this.$route.query.writerId;
       this.$http.post("http://localhost:8080/myIndex", msg, {emulateJSON:true})
                 .then(function(response){
                   console.log(response);
@@ -68,9 +69,10 @@ export default {
                     this.user.nickname = response.body.data.nickname;
                     this.lastDirayDate = response.body.data.lastDirayDate;
                     this.dirays = response.body.data.dirays;
-
-                    window.localStorage.setItem('avator', response.body.data.avator);
-                    window.localStorage.setItem('nickname', response.body.data.nickname);
+                    if (userId == this.writerId) {
+                      window.localStorage.setItem('avator', response.body.data.avator);
+                      window.localStorage.setItem('nickname', response.body.data.nickname);
+                    }
                   }
                 })
     }
